@@ -58,10 +58,22 @@ main {
   display: flex;
   .container {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1300px;
     margin: 0 auto;
     flex: 1;
   }
+}
+
+.sr-only {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 #app {
@@ -70,11 +82,5 @@ main {
   min-height: 100vh;
   background: #000;
   color: #fff;
-}
-
-@media (max-width: 1100px) {
-  .container {
-    padding: 0px 5px;
-  }
 }
 </style>

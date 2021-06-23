@@ -53,6 +53,7 @@ header {
   width: 100%;
   top: 0;
   left: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent);
 }
 .container {
   display: flex;
@@ -72,18 +73,16 @@ header {
       align-items: center;
     }
     a {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       padding: 1rem 2rem;
       border-bottom: 2px solid transparent;
       color: #fff;
       font-weight: 600;
       transition: all ease 0.3s;
       &:hover {
-        border-bottom: 2px solid #f00;
         color: #f00;
       }
       &.router-link-exact-active {
-        border-bottom: 2px solid #f00;
         color: #f00;
       }
     }
