@@ -1,10 +1,25 @@
 <template>
   <div id="app">
+    <Header />
     <main>
       <router-view class="container" />
     </main>
+    <Footer />
   </div>
 </template>
+
+<script>
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
+
+export default {
+  name: "App",
+  components: {
+    Header,
+    Footer,
+  },
+};
+</script>
 
 <style lang="scss">
 * {
@@ -53,6 +68,8 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: #000;
+  color: #fff;
 }
 
 @media (max-width: 1100px) {
