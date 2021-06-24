@@ -31,7 +31,7 @@ form {
     padding: 1rem 9rem 1rem 1rem;
     border-radius: 1rem;
     font-size: 2rem;
-    border: 0.1rem solid #000;
+    border: 0.2rem solid #000;
   }
   #btnSearch {
     outline: none;
@@ -51,6 +51,9 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-top: 0.2rem solid #000;
+    border-right: 0.2rem solid #000;
+    border-bottom: 0.2rem solid #000;
     img {
       width: 2.5rem;
     }

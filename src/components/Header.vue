@@ -1,7 +1,11 @@
 <template>
   <header>
     <div class="container">
-      <h1>TMDBAPI</h1>
+      <h1>
+        <router-link :to="{ name: 'Home' }" class="titleLink"
+          >TMDBAPI</router-link
+        >
+      </h1>
       <nav>
         <ul>
           <li @click="nowActived(0)">
@@ -30,9 +34,9 @@ export default {
   mounted() {
     this.nowActived(0);
   },
-  //   created() {
-  //     window.addEventListener("scroll", this.scrollPage);
-  //   },
+  created() {
+    window.addEventListener("scroll", this.scrollPage);
+  },
   methods: {
     nowActived(value) {
       this.linkActive = value;
@@ -42,8 +46,14 @@ export default {
         document.querySelector("header").style.position = "unset";
       }
     },
-    // scrollPage() {
-    // },
+    scrollPage() {
+      if (document.querySelector(".banner").getBoundingClientRect().y <= -20) {
+        document.querySelector("header").style.background = "#000";
+      } else {
+        document.querySelector("header").style.background =
+          "linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent)";
+      }
+    },
   },
 };
 </script>
@@ -54,6 +64,7 @@ header {
   top: 0;
   left: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent);
+  transition: all 0.5s;
 }
 .container {
   display: flex;
@@ -61,6 +72,9 @@ header {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
+  .titleLink {
+    color: #fff;
+  }
   h1 {
     font-size: 4rem;
   }

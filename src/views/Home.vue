@@ -1,6 +1,14 @@
 <template>
   <section>
-    <div class="banner">
+    <div
+      class="banner"
+      :style="{
+        backgroundImage:
+          randomMovie === 'http://image.tmdb.org/t/p/originalnull'
+            ? 'url(../assets/banner-main.jpg)'
+            : `url(${randomMovie})`,
+      }"
+    >
       <div class="areaInfosMovie">
         <h1>Bem vindo(a)!</h1>
         <p>
@@ -18,26 +26,14 @@
           <img src="../assets/arrow-left.png" alt="arrowLeftIcon" />
         </button>
         <div class="areaWithAllMoviesHome">
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
-          <MovieHome />
+          <MovieHome
+            v-for="(movie, index) in movies"
+            :key="index"
+            :post="'http://image.tmdb.org/t/p/original' + movie.poster_path"
+            :title="movie.title"
+            :vote="movie.vote_average"
+            :indexMovie="index"
+          />
         </div>
         <div class="btnRight" @click="moveSlide(2)">
           <img src="../assets/arrow-right.png" alt="arrowRightIcon" />
@@ -50,6 +46,7 @@
 <script>
 import SearchArea from "@/components/SearchArea.vue";
 import MovieHome from "@/components/MovieHome.vue";
+import apiKey from "../apiKey.js";
 
 export default {
   name: "Home",
@@ -57,6 +54,9 @@ export default {
     return {
       el: null,
       papel: null,
+      page: Math.floor(Math.random() * 500),
+      movies: null,
+      randomMovie: null,
     };
   },
   components: {
@@ -72,7 +72,17 @@ export default {
     this.el = document.querySelector(".areaWithAllMoviesHome");
   },
   methods: {
-    fetchAPI() {},
+    fetchAPI() {
+      fetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey.apiKey}&language=pt-BR&page=${this.page}`
+      )
+        .then((r) => r.json())
+        .then((r) => {
+          this.movies = r.results;
+          this.randomMovie =
+            "http://image.tmdb.org/t/p/original" + r.results[10].backdrop_path;
+        });
+    },
     moveSlide(value) {
       if (document.body.clientWidth >= 500) {
         let marginSlide = this.el.style.marginLeft;
@@ -109,12 +119,15 @@ export default {
 
 <style lang="scss" scoped>
 section {
+  margin-bottom: 5rem;
   .banner {
     background: green;
     min-height: 60rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    background-position: center;
+    background-size: cover;
     .areaInfosMovie {
       width: 100%;
       max-width: 110rem;
@@ -123,8 +136,10 @@ section {
       padding: 0 1rem;
       h1 {
         font-size: 7rem;
+        font-weight: 600;
       }
       p {
+        font-weight: 600;
         font-size: 3rem;
       }
     }
@@ -137,7 +152,6 @@ section {
     }
   }
   .areaMovies {
-    background: orange;
     min-height: 30rem;
     padding: 1rem;
     display: flex;
@@ -150,11 +164,12 @@ section {
     .areaslideMovies {
       position: relative;
       overflow: hidden;
+      border-radius: 0.5rem;
       .btnLeft,
       .btnRight {
         outline: none;
         border: none;
-        background: rgba(0, 0, 0, 1);
+        background: rgba(0, 0, 0, 0.5);
         display: inline-flex;
         align-items: center;
         position: absolute;
@@ -176,12 +191,10 @@ section {
         border-radius: 0 0.5rem 0.5rem 0;
       }
       .areaWithAllMoviesHome {
-        background: rgba(255, 255, 255, 0.5);
         flex: 1;
         display: flex;
         width: calc((24rem * 20) + (1rem * 20));
         transition: all 0.5s;
-        border-radius: 0.5rem;
       }
     }
   }
