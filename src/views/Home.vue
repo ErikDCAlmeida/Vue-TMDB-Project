@@ -12,13 +12,36 @@
       </div>
     </div>
     <div class="areaMovies">
-      <button class="btnLeft">
-        <img src="../assets/arrow-left.png" alt="arrowLeftIcon" />
-      </button>
       <h2>Populares</h2>
-      <MovieHome />
-      <div class="btnRight">
-        <img src="../assets/arrow-right.png" alt="arrowRightIcon" />
+      <div class="areaslideMovies">
+        <button class="btnLeft" @click="moveSlide(1)">
+          <img src="../assets/arrow-left.png" alt="arrowLeftIcon" />
+        </button>
+        <div class="areaWithAllMoviesHome">
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+          <MovieHome />
+        </div>
+        <div class="btnRight" @click="moveSlide(2)">
+          <img src="../assets/arrow-right.png" alt="arrowRightIcon" />
+        </div>
       </div>
     </div>
   </section>
@@ -30,16 +53,62 @@ import MovieHome from "@/components/MovieHome.vue";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      el: null,
+      papel: null,
+    };
+  },
   components: {
     SearchArea,
     MovieHome,
+  },
+  created() {
+    this.fetchAPI();
+  },
+  mounted() {
+    document.querySelector(".areaWithAllMoviesHome").style.marginLeft =
+      "calc(0rem)";
+    this.el = document.querySelector(".areaWithAllMoviesHome");
+  },
+  methods: {
+    fetchAPI() {},
+    moveSlide(value) {
+      if (document.body.clientWidth >= 500) {
+        let marginSlide = this.el.style.marginLeft;
+        this.moveSlideInfos(value, marginSlide, 37.1);
+      } else {
+        let marginSlide = this.el.style.marginLeft;
+        this.moveSlideInfos(value, marginSlide, 14.84);
+      }
+    },
+    moveSlideInfos(value, marginSlide, number) {
+      if (marginSlide === "calc(0rem)") {
+        if (value === 1) {
+          this.el.style.marginLeft = `calc(${marginSlide} + 0rem`;
+        } else {
+          this.el.style.marginLeft = `calc(${marginSlide} - ${number}rem`;
+        }
+      } else if (marginSlide === "calc(-371rem)") {
+        if (value === 1) {
+          this.el.style.marginLeft = `calc(${marginSlide} + ${number}rem`;
+        } else {
+          this.el.style.marginLeft = `calc(${marginSlide} - 0rem`;
+        }
+      } else {
+        if (value === 1) {
+          this.el.style.marginLeft = `calc(${marginSlide} + ${number}rem`;
+        } else {
+          this.el.style.marginLeft = `calc(${marginSlide} - ${number}rem`;
+        }
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 section {
-  background: gray;
   .banner {
     background: green;
     min-height: 60rem;
@@ -63,43 +132,57 @@ section {
       width: 100%;
       max-width: 110rem;
       margin: 0 auto;
-      margin-bottom: 5rem;
+      margin-bottom: 7rem;
       padding: 0 1rem;
     }
   }
   .areaMovies {
     background: orange;
-    position: relative;
     min-height: 30rem;
-    padding: 1rem 3rem;
+    padding: 1rem;
     display: flex;
+    overflow: hidden;
     flex-direction: column;
-    .btnLeft,
-    .btnRight {
-      outline: none;
-      border: none;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-      background: rgba(255, 255, 255, 0.5);
-      display: inline-flex;
-      align-items: center;
-      position: absolute;
-      top: 50%;
-      border-radius: 50%;
-      padding: 1rem;
-      cursor: pointer;
-      img {
-        width: 2rem;
-      }
-    }
-    .btnLeft {
-      left: 0.5rem;
-    }
-    .btnRight {
-      right: 0.5rem;
-    }
     h2 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 2rem;
+    }
+    .areaslideMovies {
+      position: relative;
+      overflow: hidden;
+      .btnLeft,
+      .btnRight {
+        outline: none;
+        border: none;
+        background: rgba(0, 0, 0, 1);
+        display: inline-flex;
+        align-items: center;
+        position: absolute;
+        z-index: 99;
+        top: 0;
+        height: 100%;
+        padding: 0.5rem;
+        cursor: pointer;
+        img {
+          width: 2rem;
+        }
+      }
+      .btnLeft {
+        left: 0rem;
+        border-radius: 0.5rem 0 0 0.5rem;
+      }
+      .btnRight {
+        right: 0rem;
+        border-radius: 0 0.5rem 0.5rem 0;
+      }
+      .areaWithAllMoviesHome {
+        background: rgba(255, 255, 255, 0.5);
+        flex: 1;
+        display: flex;
+        width: calc((24rem * 20) + (1rem * 20));
+        transition: all 0.5s;
+        border-radius: 0.5rem;
+      }
     }
   }
 }
