@@ -3,10 +3,7 @@
     <div
       class="banner"
       :style="{
-        backgroundImage:
-          randomMovie === 'http://image.tmdb.org/t/p/originalnull'
-            ? 'url(../assets/banner-main.jpg)'
-            : `url(${randomMovie})`,
+        backgroundImage: `url(${randomMovie})`,
       }"
     >
       <div class="areaInfosMovie">
@@ -121,7 +118,7 @@ export default {
 section {
   margin-bottom: 5rem;
   .banner {
-    background: green;
+    background: #000;
     min-height: 60rem;
     display: flex;
     flex-direction: column;
@@ -135,12 +132,16 @@ section {
       margin-bottom: 5rem;
       padding: 0 1rem;
       h1 {
-        font-size: 7rem;
+        font-size: 8rem;
         font-weight: 600;
+        -webkit-text-stroke-width: 0.3rem;
+        -webkit-text-stroke-color: #000;
       }
       p {
         font-weight: 600;
-        font-size: 3rem;
+        font-size: 3.2rem;
+        -webkit-text-stroke-width: 0.1rem;
+        -webkit-text-stroke-color: #000;
       }
     }
     .areaSearch {

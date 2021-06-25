@@ -10,6 +10,19 @@
     @mouseover="activeInfos"
     @mouseout="removeInfos"
   >
+    <div
+      class="iconMoreInfos"
+      @mouseover="activeMoreInfos"
+      @mouseout="desactiveMoreInfos"
+    >
+      <img src="../assets/ellipsis.png" alt="ellipsisIconMoreInfos" />
+      <router-link
+        :to="{ name: 'SearchResult', params: { id: this.title } }"
+        class="btnMoreInfos"
+      >
+        Mais informações...
+      </router-link>
+    </div>
     <div class="circlePercent">
       <div class="slice"></div>
       <div class="bar" :style="{ borderColor: colorBorder }">
@@ -65,6 +78,26 @@ export default {
         }
       });
     },
+    activeMoreInfos() {
+      const all = document.querySelectorAll(".iconMoreInfos");
+      all.forEach((item, index) => {
+        if (this.indexMovie === index) {
+          const itemEffect = item.children.item(1);
+          itemEffect.style.width = "15rem";
+          itemEffect.style.opacity = "1";
+        }
+      });
+    },
+    desactiveMoreInfos() {
+      const all = document.querySelectorAll(".iconMoreInfos");
+      all.forEach((item, index) => {
+        if (this.indexMovie === index) {
+          const itemEffect = item.children.item(1);
+          itemEffect.style.opacity = "0";
+          itemEffect.style.width = "0rem";
+        }
+      });
+    },
   },
 };
 </script>
@@ -81,6 +114,40 @@ export default {
   flex-direction: column;
   border-radius: 0.5rem;
   position: relative;
+  .iconMoreInfos {
+    background: #000;
+    position: absolute;
+    border: 2px solid #000;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 6rem;
+    right: 0.5rem;
+    cursor: pointer;
+    img {
+      width: 2rem;
+    }
+    .btnMoreInfos {
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      opacity: 0;
+      right: 2.9rem;
+      top: -0.2rem;
+      font-size: 1.5rem;
+      color: #fff;
+      width: 0rem;
+      height: 3.4rem;
+      transition: opacity 0.3s;
+      font-weight: 500;
+      border-radius: 0.5rem 0 0rem 0.5rem;
+    }
+  }
   .circlePercent {
     background: #000;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
